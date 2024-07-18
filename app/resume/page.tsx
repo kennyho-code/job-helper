@@ -1,4 +1,5 @@
 "use client";
+import { useToast } from "@/components/ui/use-toast";
 import { useState } from "react";
 
 function ResumePage() {
@@ -19,6 +20,7 @@ function ResumePage() {
 function Uploader() {
   const [dragActive, setDragActive] = useState(false);
   const [file, setFile] = useState<File | null>(null);
+  const { toast } = useToast();
   console.log(dragActive);
   return (
     <div
@@ -46,6 +48,15 @@ function Uploader() {
         setDragActive(false);
 
         const file = e.dataTransfer.files && e.dataTransfer.files[0];
+        // 250mb
+        const limit = file.size / 1024 / 1024 > 250;
+        toast({
+          title: "Test title",
+          description: "test description",
+        });
+        if (limit) {
+        }
+
         console.log(file);
       }}
     >
