@@ -18,13 +18,16 @@ function ResumePage() {
 }
 
 function Uploader() {
+  const [data, setData] = useState<{
+    image: string | null;
+  }>({ image: null });
   const [dragActive, setDragActive] = useState(false);
   const [file, setFile] = useState<File | null>(null);
   const { toast } = useToast();
-  console.log(dragActive);
+  console.log(data);
   return (
     <div
-      className="w-[400px] h-[400px] bg-slate-400"
+      className="w-[400px] h-[400px] bg-slate-400 rounded-lg p-4 flex justify-center items-center"
       onDragOver={(e) => {
         e.preventDefault();
         e.stopPropagation();
@@ -50,14 +53,28 @@ function Uploader() {
         const file = e.dataTransfer.files && e.dataTransfer.files[0];
         // 250mb
         const limit = file.size / 1024 / 1024 > 250;
-        toast({
-          title: "Test title",
-          description: "test description",
-        });
+
         if (limit) {
+          toast({
+            title: "File Not Accepted",
+            description:
+              "Your file is too big! Please upload a file smaller than 250mb",
+          });
+          return;
         }
 
+        setFile(file);
         console.log(file);
+        const reader = new FileReader();
+        console.log(reader);
+        reader.onload = (e) => {
+          setData((prev) => ({
+            ...prev,
+            image: e.target?.result as string,
+          }));
+          console.log("data: ", data);
+        };
+        reader.readAsDataURL(file);
       }}
     >
       uploader
