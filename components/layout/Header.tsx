@@ -1,4 +1,5 @@
 import { createClient } from "@/utils/supabase/server";
+import SignOut from "./SignOut";
 
 async function getUserId() {
   const supabase = createClient();
@@ -11,7 +12,10 @@ async function Header() {
   return (
     <div className="bg-red-300 flex justify-between">
       <div>Logo</div>
-      <div>userId: {userId}</div>
+      <div>
+        <div>userId: {userId}</div>
+        <SignOut userId={userId} />
+      </div>
     </div>
   );
 }
