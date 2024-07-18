@@ -3,6 +3,10 @@ import { Inter as FontSans } from "next/font/google";
 import { Toaster } from "@/components/ui/toaster";
 
 import "./globals.css";
+import Header from "@/components/layout/Header";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import SideBar from "@/components/layout/SideBar";
 
 const fontSans = FontSans({
   subsets: ["latin"],
@@ -26,7 +30,11 @@ export default function RootLayout({
           "min-h-screen bg-background font-sans antialiased --font-sans"
         }
       >
-        {children}
+        <Header />
+        <div className="flex">
+          <SideBar />
+          {children}
+        </div>
         <Toaster />
       </body>
     </html>
